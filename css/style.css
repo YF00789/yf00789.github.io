@@ -71,7 +71,7 @@ main {
 
 .hero-image {
     width: 100%;
-    height: 450px;
+    height: 75%;
     object-fit: cover;
     border: 4px solid #555;
     margin-bottom: 1.5rem;
