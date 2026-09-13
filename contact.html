@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="schedule.html">Reading Schedule</a></li>
+            <li><a href="team.html">About the Team</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="card">
+            <h2>Suggest a Book / Contact Us</h2>
+            <p>Have a question or want to recommend a book for our collection? Fill out the form below!</p>
+            
+            <form id="contact-form" action="#" method="GET">
+                
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                <label for="inquiryType">Inquiry Type:</label>
+                <select id="inquiryType" name="inquiryType">
+                    <option value="book_suggestion">Book Suggestion</option>
+                    <option value="event_registration">Event Registration</option>
+                    <option value="general_question">General Question</option>
+                </select>
+
+                <label for="message">Your Message:</label>
+                <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+
+                <button type="submit">Submit Message</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>Project by: Ilya D & Zhannur K</p>
+    </footer>
+
+</body>
+</html>
