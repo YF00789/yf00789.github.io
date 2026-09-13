@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+body {
+    font-family: 'VT323', monospace; 
+    margin: 0;
+    padding: 0;
+    background-color: #5c3a21; 
+    color: #000000;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 1.4rem;
+}
+
+h1, h2, h3, h4 {
+    color: #333333;
+    text-shadow: 2px 2px #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    display: flex; 
+    justify-content: center;
+    gap: 15px;
+    background-color: #3e2723;
+    border-bottom: 4px solid #1a1007;
+}
+
+nav ul li a {
+    display: block;
+    background-color: #7D7D7D;
+    color: #FFFFFF;
+    text-shadow: 2px 2px #000000;
+    text-align: center;
+    padding: 0.5rem 1.5rem; 
+    text-decoration: none; 
+    font-size: 1.5rem;
+    border: 4px solid;
+    border-top-color: #9E9E9E;
+    border-left-color: #9E9E9E;
+    border-bottom-color: #3E3E3E;
+    border-right-color: #3E3E3E;
+}
+
+nav ul li a:hover {
+    background-color: #8b8b8b;
+    color: #FFFF55; 
+}
+
+main {
+    flex: 1;
+    padding: 2rem 5%; 
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: #c6c6c6;
+    border: 6px solid;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+    border-bottom-color: #555555;
+    border-right-color: #555555;
+    padding: 25px;
+    margin-bottom: 2rem;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+.hero-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border: 4px solid #555;
+    margin-bottom: 1.5rem;
+    image-rendering: pixelated;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid #528337;
+    margin-bottom: 1rem;
+    background-color: #000;
+}
+
+.team-grid {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.team-member {
+    text-align: center;
+    max-width: 300px;
+    background-color: #a0a0a0;
+    padding: 15px;
+    border: 4px solid #555;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #8b8b8b;
+    border: 4px solid #3e3e3e;
+}
+
+table th, table td {
+    border: 2px solid #555555;
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #555555;
+    color: #ffffff;
+    text-shadow: 2px 2px #000;
+}
+
+table tr:nth-child(even) {
+    background-color: #9e9e9e;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    max-width: 600px;
+    background-color: #a0a0a0;
+    padding: 20px;
+    border: 4px solid #555;
+}
+
+#contact-form label {
+    font-weight: bold;
+    color: #111;
+}
+
+#contact-form input, 
+#contact-form select, 
+#contact-form textarea {
+    padding: 10px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 4px solid;
+    border-top-color: #555;
+    border-left-color: #555;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+#contact-form input:focus, 
+#contact-form select:focus, 
+#contact-form textarea:focus {
+    outline: none;
+    border-color: #528337;
+}
+
+#contact-form button {
+    background-color: #7D7D7D;
+    color: #FFFFFF;
+    text-shadow: 2px 2px #000000;
+    border: 4px solid;
+    border-top-color: #9E9E9E;
+    border-left-color: #9E9E9E;
+    border-bottom-color: #3E3E3E;
+    border-right-color: #3E3E3E;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+}
+
+#contact-form button:hover {
+    background-color: #528337;
+    color: #FFFF55;
+}
+
+footer {
+    background-color: #3e2723;
+    color: #aaaaaa;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+    border-top: 4px solid #1a1007;
+    font-size: 1.2rem;
+}
