@@ -14,12 +14,16 @@ body {
     grid-template-columns: 250px 1fr;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    gap: 15px;
+    gap: 15px; 
 }
-h1, h2, h3, h4 { color: #333333; text-shadow: 2px 2px #ffffff; margin-bottom: 0.5rem; }
+h1, h2, h3, h4 { 
+    color: #333333; 
+    text-shadow: 2px 2px #ffffff; 
+    margin-bottom: 0.5rem; 
+}
 header {
     grid-area: header;
-    background-color: #3e2723;
+    background-color: #3e2723; 
     border-bottom: 4px solid #1a1007;
     padding: 10px 20px;
     display: flex;
@@ -38,8 +42,8 @@ nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    display: flex; 
-    gap: 15px;
+    display: flex;
+    gap: 15px; 
 }
 nav ul li a {
     display: block;
@@ -74,8 +78,8 @@ main {
     box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
 }
 .card-row {
-    display: flex;
-    gap: 20px;
+    display: flex; 
+    gap: 20px; 
     align-items: stretch;
 }
 .flex-card {
@@ -83,9 +87,9 @@ main {
     border: 4px solid #555;
     padding: 15px;
     display: flex;
-    flex-direction: column;
-    flex: 1;
-    transition: transform 0.2s, box-shadow 0.2s;
+    flex-direction: column; 
+    flex: 1; 
+    transition: transform 0.2s, box-shadow 0.2s; 
 }
 .flex-card:hover {
     transform: scale(1.05) translateY(-5px);
@@ -102,41 +106,68 @@ main {
 .gallery-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
-    gap: 15px;
+    gap: 15px; 
 }
 .gallery-item {
     position: relative;
     overflow: hidden;
     border: 4px solid #333;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1; 
 }
 .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s;
+    width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s;
 }
 .gallery-caption {
-    position: absolute;
-    bottom: -100%;
-    left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    color: #FFFF55;
-    text-align: center;
-    padding: 15px 0;
-    transition: bottom 0.3s ease;
+    position: absolute; bottom: -100%; left: 0; width: 100%;
+    background: rgba(0, 0, 0, 0.8); color: #FFFF55; text-align: center;
+    padding: 15px 0; transition: bottom 0.3s ease;
 }
 .gallery-item:hover .gallery-caption { bottom: 0; }
 .gallery-item:hover img { transform: scale(1.1); }
+.team-grid {
+    display: flex; gap: 2rem; justify-content: space-around; flex-wrap: wrap;
+}
+.team-member {
+    text-align: center; max-width: 300px; background-color: #a0a0a0;
+    padding: 15px; border: 4px solid #555;
+}
+.profile-img {
+    width: 150px; height: 150px; border-radius: 50%; 
+    object-fit: cover; border: 6px solid #528337; margin-bottom: 1rem;
+}
+table {
+    width: 100%; border-collapse: collapse; margin-top: 1rem;
+    background-color: #8b8b8b; border: 4px solid #3e3e3e;
+}
+table th, table td {
+    border: 2px solid #555555; padding: 12px; text-align: left;
+}
+table th {
+    background-color: #555555; color: #ffffff; text-shadow: 2px 2px #000;
+}
+table tr:nth-child(even) { background-color: #9e9e9e; }
+#contact-form {
+    display: flex; flex-direction: column; gap: 15px; 
+    max-width: 600px; background-color: #a0a0a0; padding: 20px; border: 4px solid #555;
+}
+#contact-form label { font-weight: bold; color: #111; }
+#contact-form input, #contact-form select, #contact-form textarea {
+    padding: 10px; background-color: #000000; color: #ffffff;
+    border: 4px solid; border-color: #555 #fff #fff #555;
+    font-family: 'VT323', monospace; font-size: 1.2rem; width: 100%; box-sizing: border-box; 
+}
+#contact-form input:focus, #contact-form select:focus, #contact-form textarea:focus {
+    outline: none; border-color: #528337; 
+}
+#contact-form button {
+    background-color: #7D7D7D; color: #FFFFFF; text-shadow: 2px 2px #000000;
+    border: 4px solid; border-color: #9E9E9E #3E3E3E #3E3E3E #9E9E9E;
+    padding: 12px 20px; cursor: pointer; font-family: 'VT323', monospace; font-size: 1.5rem;
+}
+#contact-form button:hover { background-color: #528337; color: #FFFF55; }
 footer {
-    grid-area: footer;
-    background-color: #3e2723;
-    color: #aaaaaa;
-    text-align: center;
-    padding: 1rem;
-    border-top: 4px solid #1a1007;
+    grid-area: footer; background-color: #3e2723; color: #aaaaaa;
+    text-align: center; padding: 1rem; border-top: 4px solid #1a1007;
 }
 @media (max-width: 800px) {
     body {
