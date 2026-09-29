@@ -4,69 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule</title>
-    <linkef hr="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="images/logo.png" alt="Library Logo">
-            <h2>Library</h2>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Library</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="schedule.html">Schedule</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="schedule.html">Schedule</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="team.html">Our Team</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
-    <aside class="sidebar">
-        <h3>Registration</h3>
-        <p>Some events require prior sign-up due to limited seating.</p>
-    </aside>
-    <main>
-        <section class="card">
-            <h2>Weekly Events & Reading Schedule</h2>
-            <p>Join us for our weekly events. All ages are welcome!</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Day / Time</th>
-                        <th>Event Name</th>
-                        <th>Target Audience</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Tuesday, 10:00 AM</td>
-                        <td>Toddler Storytime</td>
-                        <td>Children (Ages 2-5)</td>
-                    </tr>
-                    <tr>
-                        <td>Wednesday, 6:00 PM</td>
-                        <td>Local Authors Meetup</td>
-                        <td>Adults</td>
-                    </tr>
-                    <tr>
-                        <td>Friday, 4:00 PM</td>
-                        <td>Teen Tech Coding Club</td>
-                        <td>Teens (Ages 13-18)</td>
-                    </tr>
-                    <tr>
-                        <td>Saturday, 2:00 PM</td>
-                        <td>Weekend Book Club</td>
-                        <td>All Ages</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+    </nav>
+    <main class="container mt-5 mb-5">
+        <div class="btn-group mb-4" role="group">
+            <button type="button" class="btn btn-primary">Kids Events</button>
+            <button type="button" class="btn btn-secondary">Adult Events</button>
+            <button type="button" class="btn btn-light">Tech Club</button>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="bg-dark text-light p-4 rounded border border-light h-100">
+                    <h2>Weekly Reading</h2>
+                    <p>Join us every weekend for our community book reading sessions. Fun for the whole family!</p>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="bg-dark text-light p-4 rounded border border-light h-100">
+                    <h2>Author Meetups</h2>
+                    <p>Meet local authors and get your books signed every Wednesday at 6 PM.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-4 mb-3">
+                <div class="bg-secondary text-dark p-3 rounded text-center border border-dark">
+                    <h3 class="mb-0">Morning Sessions</h3>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="bg-secondary text-dark p-3 rounded text-center border border-dark">
+                    <h3 class="mb-0">Afternoon Sessions</h3>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="bg-secondary text-dark p-3 rounded text-center border border-dark">
+                    <h3 class="mb-0">Evening Sessions</h3>
+                </div>
+            </div>
+        </div>
     </main>
-    <footer>
-        <p>Project by: Ilya D.</p>
+    <footer class="bg-dark text-center text-light py-3 mt-auto">
+        <p class="mb-0">Project by Ilya D.</p>
     </footer>
 </body>
 </html>
