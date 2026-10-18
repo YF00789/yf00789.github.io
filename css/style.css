@@ -1,0 +1,173 @@
+:root {
+    --mc-dirt: #8b5a2b;
+    --mc-grass: #4caf50;
+    --mc-stone: #7d7d7d;
+    --mc-text: #ffffff;
+    --mc-border-light: #e0e0e0;
+    --mc-border-dark: #3a3a3a;
+    --mc-btn: #aaaaaa;
+    --mc-btn-hover: #cccccc;
+    --mc-error: #ff5555;
+    --bg-color: #5c85d6;
+}
+body {
+    font-family: 'Press Start 2P', monospace;
+    background-color: var(--bg-color);
+    color: var(--mc-text);
+    margin: 0;
+    padding: 20px;
+    transition: background-color 0.5s ease;
+    line-height: 1.6;
+    image-rendering: pixelated;
+}
+h1, h2 {
+    text-shadow: 2px 2px 0px #000;
+    text-transform: uppercase;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+#datetime-display {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border: 2px solid var(--mc-border-dark);
+    display: inline-block;
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+.section-block {
+    background-color: var(--mc-stone);
+    border: 4px solid;
+    border-color: var(--mc-border-light) var(--mc-border-dark) var(--mc-border-dark) var(--mc-border-light);
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: inset -2px -2px 0px rgba(0,0,0,0.3), 5px 5px 0px rgba(0,0,0,0.5);
+}
+.mc-button {
+    font-family: 'Press Start 2P', monospace;
+    background-color: var(--mc-btn);
+    color: #000;
+    border: 4px solid;
+    border-color: #ffffff #555555 #555555 #ffffff;
+    padding: 15px 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px #000;
+}
+.mc-button:hover {
+    background-color: var(--mc-btn-hover);
+}
+.mc-button:active {
+    border-color: #555555 #ffffff #ffffff #555555;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    text-shadow: 1px 1px 0px #000;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-family: 'Press Start 2P', monospace;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid var(--mc-border-light);
+    font-size: 0.8rem;
+}
+.error {
+    color: var(--mc-error);
+    font-size: 0.6rem;
+    margin-top: 5px;
+    display: none;
+    text-shadow: 1px 1px 0px #000;
+}
+.accordion-item {
+    margin-bottom: 10px;
+}
+.accordion-header {
+    width: 100%;
+    text-align: left;
+    background-color: var(--mc-dirt);
+    color: #fff;
+    border: 4px solid;
+    border-color: #a46e3d #4e3015 #4e3015 #a46e3d;
+    padding: 15px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+}
+.accordion-header:hover {
+    filter: brightness(1.1);
+}
+.accordion-content {
+    background-color: var(--mc-grass);
+    padding: 0 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    border-left: 4px solid #66bb6a;
+    border-right: 4px solid #388e3c;
+    border-bottom: 4px solid #388e3c;
+    box-sizing: border-box;
+}
+.accordion-content p {
+    font-size: 0.7rem;
+    margin: 15px 0;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+}
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.popup-content {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+}
+.close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: var(--mc-error);
+    color: #fff;
+    border: 3px solid;
+    border-color: #ff9999 #aa0000 #aa0000 #ff9999;
+    width: 40px;
+    height: 40px;
+    font-family: 'Press Start 2P', monospace;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+}
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--mc-border-dark);
+    font-size: 0.7rem;
+    text-shadow: 1px 1px 0px #000;
+    color: var(--mc-text);
+}
