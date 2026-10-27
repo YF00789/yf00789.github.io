@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="Library Logo">
+            <h2>Library</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="team.html">Our Team</a></li>
+                <li><a href="hub.html">Server Hub</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <aside class="sidebar">
+        <h3>Server Time</h3>
+        <div id="datetime-display"></div>
+        <br>
+        <h3>Settings</h3>
+        <button id="color-btn" class="mc-button" style="width: 100%;">Change Theme Color</button>
+    </aside>
+    <main>
+        <section class="card">
+            <h2>Login/Register</h2>
+            <form id="validation-form" novalidate>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username">
+                    <div class="error" id="username-error">Username is required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                    <div class="error" id="email-error">Invalid email format.</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password (min. 8 chars)</label>
+                    <input type="password" id="password" name="password">
+                    <div class="error" id="password-error">Password must be at least 8 characters.</div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password">
+                    <div class="error" id="confirm-password-error">Passwords do not match.</div>
+                </div>
+                <button type="submit" class="mc-button">Login/Register</button>
+            </form>
+        </section>
+        <section class="card">
+            <h2>FAQ</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">How to craft a pickaxe?</button>
+                    <div class="accordion-content">
+                        <p>Place 2 sticks vertically in the center and 3 materials: wood, stone, iron, gold, or diamond horizontally across the top row of a crafting table.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">What do creepers drop?</button>
+                    <div class="accordion-content">
+                        <p>Creepers drop 0-2 gunpowder when killed. They can also drop a music disc if killed by a skeleton.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">How to tame a wolf?</button>
+                    <div class="accordion-content">
+                        <p>Feed a wild wolf bones until red hearts appear above its head and a red collar appears around its neck.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="card">
+            <h2>Stay Updated</h2>
+            <button id="open-popup" class="mc-button">Subscribe to Our Newsletter</button>
+        </section>
+    </main>
+    <footer>
+        <p>Project by: Ilya D.</p>
+    </footer>
+    <div id="popup-overlay" class="popup-overlay">
+        <div class="popup-content card">
+            <button id="close-popup" class="close-btn">X</button>
+            <h2>Subscribe</h2>
+            <form>
+                <div class="form-group">
+                    <label for="sub-email">Email:</label>
+                    <input type="email" id="sub-email" required>
+                </div>
+                <button type="submit" class="mc-button">Send</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
