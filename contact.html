@@ -20,6 +20,7 @@
                 <li><a href="team.html">Our Team</a></li>
                 <li><a href="hub.html">Server Hub</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
+                <li><button id="theme-toggle" class="mc-button">Night Vision</button></li>
             </ul>
         </nav>
     </header>
@@ -34,7 +35,8 @@
         <section class="card">
             <h2>Suggest a Book / Contact Us</h2>
             <p>Have a question or want to recommend a book for our collection? Fill out the form below!</p>
-            <form id="contact-form" action="#" method="GET">
+            <div id="form-success-message" style="color: #4caf50; margin-bottom: 10px; text-shadow: 1px 1px #000;"></div>
+            <form id="contact-form" action="#" method="POST">
                 <label for="fullName">Full Name:</label>
                 <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
                 <label for="email">Email Address:</label>
@@ -54,5 +56,6 @@
     <footer>
         <p>Project by: Ilya D.</p>
     </footer>
+    <script src="js/script.js"></script>
 </body>
 </html>

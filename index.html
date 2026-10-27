@@ -20,6 +20,7 @@
                 <li><a href="team.html">Our Team</a></li>
                 <li><a href="hub.html">Server Hub</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
+                <li><button id="theme-toggle" class="mc-button">Night Vision</button></li>
             </ul>
         </nav>
     </header>
@@ -34,7 +35,23 @@
     <main>
         <section class="card">
             <h1>Welcome</h1>
-            <p>Your local hub for knowledge, community, and imagination. We provide a peaceful space for reading, learning, and gathering.</p>
+            <h3 id="greeting-message"></h3>
+            <button id="time-btn" class="mc-button">Show Time</button>
+            <span id="time-display"></span>
+            <p>
+                Your local hub for knowledge, community, and imagination. 
+                <span id="read-more-text" class="hidden-content">We provide a peaceful space for reading, learning, and gathering. Enjoy our extensive collections and regular community meetups!</span>
+            </p>
+            <button id="read-more-btn" class="mc-button">Read More</button>
+            
+            <div class="rating-section">
+                <h3>Rate our Library:</h3>
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
             <br>
             <h2>Featured Services</h2>
             <div class="card-row">
@@ -57,10 +74,13 @@
                     <button>View Schedule</button>
                 </div>
             </div>
+            <h2>Staff Picks</h2>
+            <div id="dynamic-books" class="card-row"></div>
         </section>
     </main>
     <footer>
         <p>Project by: Ilya D.</p>
     </footer>
+    <script src="js/script.js"></script>
 </body>
 </html>
