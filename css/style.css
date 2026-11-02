@@ -196,3 +196,90 @@ footer {
     .card-row { flex-direction: column; }
     .gallery-container { grid-template-columns: repeat(2, 1fr); }
 }
+#scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 6px;
+    background: linear-gradient(90deg, #4caf50, #FFFF55, #ffaa00);
+    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+.search-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+#faq-search {
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: 4px solid var(--mc-border-light);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+}
+#autocomplete-list {
+    position: absolute;
+    background-color: var(--mc-stone);
+    border: 4px solid var(--mc-border-dark);
+    border-top: none;
+    width: 100%;
+    z-index: 100;
+    box-sizing: border-box;
+}
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    color: #fff;
+    border-bottom: 2px solid var(--mc-border-dark);
+}
+.suggestion-item:hover {
+    background-color: var(--mc-grass);
+}
+mark {
+    background-color: #FFFF55;
+    color: #000;
+}
+#toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 15px 20px;
+    border: 4px solid #388e3c;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    display: none;
+    z-index: 9999;
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
+}
+.spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.stats-counter {
+    margin-top: 15px;
+    text-align: center;
+    background-color: #a0a0a0;
+    border: 4px solid #555;
+    padding: 10px;
+}
+.stats-counter h2 {
+    color: #4caf50;
+}
