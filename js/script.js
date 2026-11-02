@@ -111,29 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const contactForm = document.getElementById('contact-form');
     const formSuccessMessage = document.getElementById('form-success-message');
-    if (contactForm && formSuccessMessage) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            fetch('https://jsonplaceholder.typicode.com/posts', {
-                method: 'POST',
-                body: new FormData(contactForm)
-            })
-            .then(response => {
-                if(response.ok) {
-                    formSuccessMessage.textContent = 'Message successfully dispatched to the server!';
-                    contactForm.reset();
-                    setTimeout(() => {
-                        formSuccessMessage.textContent = '';
-                    }, 5000);
-                }
-            })
-            .catch(error => {
-                formSuccessMessage.style.color = '#ff5555';
-                formSuccessMessage.textContent = 'Error connecting to the server.';
-            });
-        });
-    }
 
     const validationForm = document.getElementById('validation-form');
     if (validationForm) {
@@ -239,4 +216,104 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     updateDateTime();
     setInterval(updateDateTime, 1000);
+});
+$(document).ready(function() {
+    console.log("jQuery is ready!");
+    $(window).on('scroll', function() {
+        let docHeight = $(document).height() - $(window).height();
+        let scrollPercent = ($(window).scrollTop() / docHeight) * 100;
+        $('#scroll-progress-bar').css('width', scrollPercent + '%');
+    });
+    const faqData = [
+        "How to craft a pickaxe?",
+        "What do creepers drop?",
+        "How to tame a wolf?"
+    ];
+    $('#faq-search').on('keyup', function() {
+        let val = $(this).val().toLowerCase();
+        let suggestions = "";
+        if (val.length > 0) {
+            let matches = faqData.filter(item => item.toLowerCase().includes(val));
+            matches.forEach(match => {
+                suggestions += `<div class="suggestion-item">${match}</div>`;
+            });
+        }
+        $('#autocomplete-list').html(suggestions);
+        $('.accordion-item').each(function() {
+            let $item = $(this);
+            let $header = $item.find('.accordion-header');
+            let $content = $item.find('.accordion-content p');
+            let originalHeaderText = $header.text().replace(/<mark>|<\/mark>/gi, "");
+            let originalContentText = $content.text().replace(/<mark>|<\/mark>/gi, "");
+            $header.text(originalHeaderText);
+            $content.text(originalContentText);
+            if (val.length > 0) {
+                let regex = new RegExp(`(${val})`, "gi");
+                let matchFound = false;
+
+                if (originalHeaderText.toLowerCase().includes(val)) {
+                    $header.html(originalHeaderText.replace(regex, "<mark>$1</mark>"));
+                    matchFound = true;
+                }
+                if (originalContentText.toLowerCase().includes(val)) {
+                    $content.html(originalContentText.replace(regex, "<mark>$1</mark>"));
+                    matchFound = true;
+                }
+
+                if (matchFound) {
+                    $item.show();
+                } else {
+                    $item.hide();
+                }
+            } else {
+                $item.show();
+            }
+        });
+    });
+    $(document).on('click', '.suggestion-item', function() {
+        $('#faq-search').val($(this).text()).trigger('keyup');
+        $('#autocomplete-list').empty();
+    });
+    $('.counter').each(function() {
+        $(this).prop('Counter', 0).animate({
+            Counter: $(this).data('target')
+        }, {
+            duration: 2000,
+            easing: 'swing',
+            step: function(now) {
+                $(this).text(Math.ceil(now) + "+");
+            }
+        });
+    });
+    function showToast(message) {
+        $('#toast').text(message).fadeIn().delay(3000).fadeOut();
+    }
+    $('#contact-form').on('submit', function(e) {
+        e.preventDefault();
+        let $btn = $(this).find('button[type="submit"]');
+        let originalText = $btn.text();
+        $btn.prop('disabled', true).html('<span class="spinner"></span>Please wait...');
+        setTimeout(function() {
+            $btn.prop('disabled', false).text(originalText);
+            showToast("Form submitted successfully!");
+            $('#contact-form')[0].reset();
+        }, 2000);
+    });
+    $('#copy-btn').on('click', function() {
+        let text = $('#coord-text').text();
+        navigator.clipboard.writeText(text).then(function() {
+            $('#copy-btn').html('&#10003; Copied');
+            showToast("Copied to clipboard!");
+            setTimeout(() => $('#copy-btn').text('Copy'), 2000);
+        });
+    });
+    function lazyLoad() {
+        $('.lazy').each(function() {
+            if ($(this).offset().top < $(window).scrollTop() + $(window).height() + 100) {
+                $(this).attr('src', $(this).attr('data-src')).removeClass('lazy');
+            }
+        });
+    }
+    $(window).on('scroll', lazyLoad);
+    lazyLoad();
 });
