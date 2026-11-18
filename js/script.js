@@ -1,3 +1,13 @@
+// Global initialization immediately executes to apply background and prevent color flashing
+(function initPersistedSettings() {
+    try {
+        const savedBg = localStorage.getItem('mcBgColor');
+        if (savedBg) {
+            document.documentElement.style.setProperty('--bg-color', savedBg);
+        }
+    } catch (e) {}
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     const clickSound = new Audio('https://www.myinstants.com/media/sounds/minecraft_click.mp3');
 
@@ -12,6 +22,21 @@ document.addEventListener('DOMContentLoaded', () => {
             clickSound.play().catch(e => {});
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('mcTheme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+    }
+
+    // Handles generating, applying, and saving random background colors
+    const colorBtn = document.getElementById('color-btn');
+    if (colorBtn) {
+        const colors = ['#5c85d6', '#872b2b', '#2b8743', '#872b84', '#1a1a1a', '#5c3a21'];
+        colorBtn.addEventListener('click', () => {
+            let currentIndex = parseInt(localStorage.getItem('mcBgColorIndex') || '-1');
+            let nextIndex = (currentIndex + 1) % colors.length;
+            let selectedColor = colors[nextIndex];
+            
+            document.documentElement.style.setProperty('--bg-color', selectedColor);
+            localStorage.setItem('mcBgColor', selectedColor);
+            localStorage.setItem('mcBgColorIndex', nextIndex);
         });
     }
 
@@ -93,21 +118,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const validatePhone = (phone) => /^\d{10}$/.test(phone);
     const validatePassword = (pwd) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pwd);
 
+    let user = null;
+    try {
+        const storedData = localStorage.getItem('libraryUser');
+        if (storedData) user = JSON.parse(storedData);
+    } catch (e) {
+        localStorage.removeItem('libraryUser');
+    }
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    const sidebarUserInfo = document.getElementById('sidebar-user-info');
+    if (sidebarUserInfo) {
+        if (user && isLoggedIn) {
+            sidebarUserInfo.style.display = 'block';
+            const sidebarName = document.getElementById('sidebar-name');
+            if (sidebarName) sidebarName.textContent = user.name || 'Crafter';
+        } else {
+            sidebarUserInfo.style.display = 'none';
+        }
+    }
+
+    const profileData = document.getElementById('profile-data');
+    if (profileData) {
+        if (user && isLoggedIn) {
+            const pName = document.getElementById('prof-name');
+            const pEmail = document.getElementById('prof-email');
+            const pPhone = document.getElementById('prof-phone');
+            if (pName) pName.textContent = user.name || 'N/A';
+            if (pEmail) pEmail.textContent = user.email || 'N/A';
+            if (pPhone) pPhone.textContent = user.phone || 'N/A';
+        } else {
+            const mainContent = document.querySelector('main');
+            if (mainContent) {
+                mainContent.innerHTML = '<section class="card"><h2>Access Denied</h2><p>Please <a href="hub.html" style="color:#4caf50; font-weight:bold;">log in</a> to view your profile.</p></section>';
+            }
+        }
+    }
+
+    const handleLogout = () => {
+        localStorage.setItem('isLoggedIn', 'false');
+        window.location.href = 'hub.html';
+    };
+
+    const sidebarLogoutBtn = document.getElementById('sidebar-logout-btn');
+    if (sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', handleLogout);
+    
+    const profileLogoutBtn = document.getElementById('logout-btn');
+    if (profileLogoutBtn) profileLogoutBtn.addEventListener('click', handleLogout);
+
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             let isValid = true;
 
-            const name = document.getElementById('signup-name').value;
-            if (!name.trim()) { showError('signup-name', true, 'Name is required.'); isValid = false; }
+            const name = document.getElementById('signup-name').value.trim();
+            if (!name) { showError('signup-name', true, 'Name is required.'); isValid = false; }
             else { showError('signup-name', false); }
 
-            const email = document.getElementById('signup-email').value;
+            const email = document.getElementById('signup-email').value.trim();
             if (!validateEmail(email)) { showError('signup-email', true, 'Invalid email format.'); isValid = false; }
             else { showError('signup-email', false); }
 
-            const phone = document.getElementById('signup-phone').value;
+            const phone = document.getElementById('signup-phone').value.trim();
             if (!validatePhone(phone)) { showError('signup-phone', true, 'Must be 10 digits.'); isValid = false; }
             else { showError('signup-phone', false); }
 
@@ -122,8 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isValid) {
                 const userData = { name, email, phone, password };
                 localStorage.setItem('libraryUser', JSON.stringify(userData));
-                alert('Account crafted successfully!');
-                signupForm.reset();
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'profile.html';
             }
         });
     }
@@ -134,17 +207,23 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let isValid = true;
             
-            const email = document.getElementById('login-email').value;
-            if (!email.trim()) { showError('login-email', true, 'Email required.'); isValid = false; }
+            const email = document.getElementById('login-email').value.trim();
+            if (!email) { showError('login-email', true, 'Email required.'); isValid = false; }
             else { showError('login-email', false); }
 
             const password = document.getElementById('login-password').value;
-            if (!password.trim()) { showError('login-password', true, 'Password required.'); isValid = false; }
+            if (!password) { showError('login-password', true, 'Password required.'); isValid = false; }
             else { showError('login-password', false); }
 
             if (isValid) {
-                const storedUser = JSON.parse(localStorage.getItem('libraryUser'));
+                let storedUser = null;
+                try {
+                    const stored = localStorage.getItem('libraryUser');
+                    if (stored) storedUser = JSON.parse(stored);
+                } catch (err) {}
+                
                 if (storedUser && storedUser.email === email && storedUser.password === password) {
+                    localStorage.setItem('isLoggedIn', 'true');
                     window.location.href = 'profile.html';
                 } else {
                     showError('login-password', true, 'Invalid credentials.');
@@ -159,16 +238,16 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let isValid = true;
 
-            const name = document.getElementById('fullName').value;
-            if (!name.trim()) { showError('fullName', true, 'Name is required.'); isValid = false; }
+            const name = document.getElementById('fullName').value.trim();
+            if (!name) { showError('fullName', true, 'Name is required.'); isValid = false; }
             else { showError('fullName', false); }
 
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             if (!validateEmail(email)) { showError('email', true, 'Invalid email format.'); isValid = false; }
             else { showError('email', false); }
 
-            const message = document.getElementById('message').value;
-            if (!message.trim()) { showError('message', true, 'Message is required.'); isValid = false; }
+            const message = document.getElementById('message').value.trim();
+            if (!message) { showError('message', true, 'Message is required.'); isValid = false; }
             else { showError('message', false); }
 
             if (isValid) {
@@ -186,25 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     contactForm.reset();
                 }, 2000);
             }
-        });
-    }
-
-    const profileData = document.getElementById('profile-data');
-    if (profileData) {
-        const user = JSON.parse(localStorage.getItem('libraryUser'));
-        if (user) {
-            document.getElementById('prof-name').textContent = user.name;
-            document.getElementById('prof-email').textContent = user.email;
-            document.getElementById('prof-phone').textContent = user.phone;
-        } else {
-            window.location.href = 'hub.html';
-        }
-    }
-
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            window.location.href = 'hub.html';
         });
     }
 
@@ -245,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     link.style.marginTop = 'auto';
                     
                     const btn = document.createElement('button');
-                    btn.textContent = 'View Book';
+                    btn.textContent = 'View Scroll';
                     btn.style.width = '100%';
                     btn.style.boxSizing = 'border-box';
                     
@@ -287,16 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closePopupBtn.addEventListener('click', () => { popupOverlay.style.display = 'none'; });
         popupOverlay.addEventListener('click', (e) => {
             if (e.target === popupOverlay) popupOverlay.style.display = 'none';
-        });
-    }
-
-    const colorBtn = document.getElementById('color-btn');
-    if (colorBtn) {
-        const colors = ['#5c85d6', '#872b2b', '#2b8743', '#872b84', '#1a1a1a'];
-        let colorIndex = 0;
-        colorBtn.addEventListener('click', () => {
-            colorIndex = (colorIndex + 1) % colors.length;
-            document.body.style.backgroundColor = colors[colorIndex];
         });
     }
 

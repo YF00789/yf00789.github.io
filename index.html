@@ -23,11 +23,17 @@
                 <li><a href="team.html">Our Team</a></li>
                 <li><a href="hub.html">Server Hub</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="profile.html">Profile</a></li>
                 <li><button id="theme-toggle" class="mc-button">Night Vision</button></li>
             </ul>
         </nav>
     </header>
     <aside class="sidebar">
+        <div id="sidebar-user-info" style="display: none; margin-bottom: 20px; padding: 10px; background-color: #a0a0a0; border: 4px solid #555;">
+            <h3 style="margin-top: 0;">Player Info</h3>
+            <p style="font-size: 0.8rem; font-family: 'Press Start 2P', monospace; margin: 10px 0;">Name: <span id="sidebar-name" style="color: #4caf50;"></span></p>
+            <button id="sidebar-logout-btn" class="mc-button" style="width: 100%; padding: 5px; font-size: 0.7rem;">Log Out</button>
+        </div>
         <h3>Library News</h3>
         <ul>
             <li><strong>Holiday Hours:</strong> Closed this Friday.</li>
@@ -66,7 +72,7 @@
                 <span class="star" data-value="5">&#9733;</span>
             </div>
             <br>
-            <h2>Search External Archives</h2>
+            <h2>Search External Archives (OpenLibrary API)</h2>
             <div class="api-search-container">
                 <input type="text" id="api-search-input" placeholder="Search global book archives...">
                 <button id="api-search-btn" class="mc-button">Search</button>

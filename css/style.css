@@ -17,7 +17,7 @@ body {
     font-family: 'VT323', monospace; 
     margin: 0;
     padding: 0;
-    background-color: #5c3a21;
+    background-color: var(--bg-color, #5c3a21);
     color: #000000;
     font-size: 1.4rem;
     display: grid;
@@ -33,7 +33,7 @@ body {
 }
 
 body.dark-mode {
-    background-color: #1a1007;
+    background-color: #1a1007 !important;
     color: #e0e0e0;
 }
 
