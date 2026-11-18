@@ -1,12 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
     const clickSound = new Audio('https://www.myinstants.com/media/sounds/minecraft_click.mp3');
 
     const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('mcTheme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             clickSound.play().catch(e => {});
             document.body.classList.toggle('dark-mode');
+            localStorage.setItem('mcTheme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         });
     }
 
@@ -27,15 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const hour = new Date().getHours();
         let greeting = '';
         switch (true) {
-            case (hour < 12):
-                greeting = 'Good Morning, Crafter!';
-                break;
-            case (hour < 18):
-                greeting = 'Good Afternoon, Crafter!';
-                break;
-            default:
-                greeting = 'Good Evening, Crafter!';
-                break;
+            case (hour < 12): greeting = 'Good Morning, Crafter!'; break;
+            case (hour < 18): greeting = 'Good Afternoon, Crafter!'; break;
+            default: greeting = 'Good Evening, Crafter!'; break;
         }
         greetingMsg.textContent = greeting;
     }
@@ -78,86 +77,187 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const bookCollection = [
-        { title: "Minecraft Guide to Redstone", type: "featured", img: "images/ebooks.jpg" },
-        { title: "Advanced Building Tactics", type: "featured", img: "images/library.jpg" },
-        { title: "Old Server Logs", type: "archived", img: "images/event.jpg" }
-    ];
+    const showError = (inputId, show, message = '') => {
+        const errorDiv = document.getElementById(`${inputId}-error`);
+        if (errorDiv) {
+            errorDiv.style.display = show ? 'block' : 'none';
+            if (show && message) errorDiv.textContent = message;
+        }
+        const inputField = document.getElementById(inputId);
+        if (inputField) {
+            inputField.style.borderColor = show ? 'var(--mc-error)' : 'var(--mc-border-light)';
+        }
+    };
 
-    const dynamicBooksContainer = document.getElementById('dynamic-books');
-    if (dynamicBooksContainer) {
-        const featuredBooks = bookCollection.filter(book => book.type === 'featured');
-        
-        featuredBooks.forEach(book => {
-            const card = document.createElement('div');
-            card.classList.add('flex-card');
+    const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validatePhone = (phone) => /^\d{10}$/.test(phone);
+    const validatePassword = (pwd) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pwd);
+
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            const name = document.getElementById('signup-name').value;
+            if (!name.trim()) { showError('signup-name', true, 'Name is required.'); isValid = false; }
+            else { showError('signup-name', false); }
+
+            const email = document.getElementById('signup-email').value;
+            if (!validateEmail(email)) { showError('signup-email', true, 'Invalid email format.'); isValid = false; }
+            else { showError('signup-email', false); }
+
+            const phone = document.getElementById('signup-phone').value;
+            if (!validatePhone(phone)) { showError('signup-phone', true, 'Must be 10 digits.'); isValid = false; }
+            else { showError('signup-phone', false); }
+
+            const password = document.getElementById('signup-password').value;
+            if (!validatePassword(password)) { showError('signup-password', true, 'Min 8 chars, 1 letter, 1 number.'); isValid = false; }
+            else { showError('signup-password', false); }
+
+            const confirmPassword = document.getElementById('signup-confirm').value;
+            if (password !== confirmPassword || confirmPassword === '') { showError('signup-confirm', true, 'Passwords do not match.'); isValid = false; }
+            else { showError('signup-confirm', false); }
+
+            if (isValid) {
+                const userData = { name, email, phone, password };
+                localStorage.setItem('libraryUser', JSON.stringify(userData));
+                alert('Account crafted successfully!');
+                signupForm.reset();
+            }
+        });
+    }
+
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
             
-            const img = document.createElement('img');
-            img.src = book.img;
-            img.alt = book.title;
-            
-            const title = document.createElement('h3');
-            title.textContent = book.title;
-            
-            const btn = document.createElement('button');
-            btn.textContent = 'Read';
-            
-            card.appendChild(img);
-            card.appendChild(title);
-            card.appendChild(btn);
-            dynamicBooksContainer.appendChild(card);
+            const email = document.getElementById('login-email').value;
+            if (!email.trim()) { showError('login-email', true, 'Email required.'); isValid = false; }
+            else { showError('login-email', false); }
+
+            const password = document.getElementById('login-password').value;
+            if (!password.trim()) { showError('login-password', true, 'Password required.'); isValid = false; }
+            else { showError('login-password', false); }
+
+            if (isValid) {
+                const storedUser = JSON.parse(localStorage.getItem('libraryUser'));
+                if (storedUser && storedUser.email === email && storedUser.password === password) {
+                    window.location.href = 'profile.html';
+                } else {
+                    showError('login-password', true, 'Invalid credentials.');
+                }
+            }
         });
     }
 
     const contactForm = document.getElementById('contact-form');
-    const formSuccessMessage = document.getElementById('form-success-message');
-
-    const validationForm = document.getElementById('validation-form');
-    if (validationForm) {
-        const showError = (inputId, show) => {
-            const errorDiv = document.getElementById(`${inputId}-error`);
-            errorDiv.style.display = show ? 'block' : 'none';
-            const inputField = document.getElementById(inputId);
-            inputField.style.borderColor = show ? 'var(--mc-error)' : 'var(--mc-border-light)';
-        };
-        const validateEmail = (email) => {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        };
-        validationForm.addEventListener('submit', (e) => {
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             let isValid = true;
-            const username = document.getElementById('username').value;
-            if (!username.trim()) {
-                showError('username', true);
-                isValid = false;
-            } else {
-                showError('username', false);
-            }
+
+            const name = document.getElementById('fullName').value;
+            if (!name.trim()) { showError('fullName', true, 'Name is required.'); isValid = false; }
+            else { showError('fullName', false); }
+
             const email = document.getElementById('email').value;
-            if (!validateEmail(email)) {
-                showError('email', true);
-                isValid = false;
-            } else {
-                showError('email', false);
-            }
-            const password = document.getElementById('password').value;
-            if (password.length<8) {
-                showError('password', true);
-                isValid = false;
-            } else {
-                showError('password', false);
-            }
-            const confirmPassword = document.getElementById('confirm-password').value;
-            if (password !== confirmPassword || confirmPassword === '') {
-                showError('confirm-password', true);
-                isValid = false;
-            } else {
-                showError('confirm-password', false);
-            }
+            if (!validateEmail(email)) { showError('email', true, 'Invalid email format.'); isValid = false; }
+            else { showError('email', false); }
+
+            const message = document.getElementById('message').value;
+            if (!message.trim()) { showError('message', true, 'Message is required.'); isValid = false; }
+            else { showError('message', false); }
+
             if (isValid) {
-                alert('Account crafted successfully!');
-                validationForm.reset();
+                let btn = contactForm.querySelector('button[type="submit"]');
+                let originalText = btn.textContent;
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span>Please wait...';
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    const toast = document.getElementById('toast');
+                    toast.textContent = "Form submitted successfully!";
+                    toast.style.display = 'block';
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                    contactForm.reset();
+                }, 2000);
+            }
+        });
+    }
+
+    const profileData = document.getElementById('profile-data');
+    if (profileData) {
+        const user = JSON.parse(localStorage.getItem('libraryUser'));
+        if (user) {
+            document.getElementById('prof-name').textContent = user.name;
+            document.getElementById('prof-email').textContent = user.email;
+            document.getElementById('prof-phone').textContent = user.phone;
+        } else {
+            window.location.href = 'hub.html';
+        }
+    }
+
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            window.location.href = 'hub.html';
+        });
+    }
+
+    const apiSearchBtn = document.getElementById('api-search-btn');
+    if (apiSearchBtn) {
+        apiSearchBtn.addEventListener('click', async () => {
+            const query = document.getElementById('api-search-input').value;
+            const resultsContainer = document.getElementById('api-results');
+            if (!query.trim()) return;
+            resultsContainer.innerHTML = '<div style="width:100%; text-align:center;"><span class="spinner"></span> Searching Library...</div>';
+            try {
+                const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=4`);
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
+                resultsContainer.innerHTML = '';
+                if (data.docs.length === 0) {
+                    resultsContainer.innerHTML = '<p>No scrolls found.</p>';
+                    return;
+                }
+                data.docs.forEach(book => {
+                    const card = document.createElement('div');
+                    card.className = 'flex-card';
+                    
+                    const title = document.createElement('h3');
+                    title.textContent = book.title;
+                    
+                    const author = document.createElement('p');
+                    author.textContent = book.author_name ? book.author_name[0] : 'Unknown Crafter';
+                    
+                    const link = document.createElement('a');
+                    if (book.key) {
+                        link.href = `https://openlibrary.org${book.key}`;
+                    } else {
+                        link.href = '#';
+                    }
+                    link.target = '_blank';
+                    link.style.textDecoration = 'none';
+                    link.style.marginTop = 'auto';
+                    
+                    const btn = document.createElement('button');
+                    btn.textContent = 'View Book';
+                    btn.style.width = '100%';
+                    btn.style.boxSizing = 'border-box';
+                    
+                    link.appendChild(btn);
+                    card.appendChild(title);
+                    card.appendChild(author);
+                    card.appendChild(link);
+                    
+                    resultsContainer.appendChild(card);
+                });
+            } catch (error) {
+                resultsContainer.innerHTML = '<p class="error" style="display:block;">Error fetching archives.</p>';
             }
         });
     }
@@ -183,16 +283,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const openPopupBtn = document.getElementById('open-popup');
     const closePopupBtn = document.getElementById('close-popup');
     if (popupOverlay && openPopupBtn && closePopupBtn) {
-        openPopupBtn.addEventListener('click', () => {
-            popupOverlay.style.display = 'flex';
-        });
-        closePopupBtn.addEventListener('click', () => {
-            popupOverlay.style.display = 'none';
-        });
+        openPopupBtn.addEventListener('click', () => { popupOverlay.style.display = 'flex'; });
+        closePopupBtn.addEventListener('click', () => { popupOverlay.style.display = 'none'; });
         popupOverlay.addEventListener('click', (e) => {
-            if (e.target === popupOverlay) {
-                popupOverlay.style.display = 'none';
-            }
+            if (e.target === popupOverlay) popupOverlay.style.display = 'none';
         });
     }
 
@@ -217,26 +311,30 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDateTime();
     setInterval(updateDateTime, 1000);
 });
+
 $(document).ready(function() {
-    console.log("jQuery is ready!");
     $(window).on('scroll', function() {
         let docHeight = $(document).height() - $(window).height();
         let scrollPercent = ($(window).scrollTop() / docHeight) * 100;
         $('#scroll-progress-bar').css('width', scrollPercent + '%');
     });
-    const faqData = [
-        "How to craft a pickaxe?",
-        "What do creepers drop?",
-        "How to tame a wolf?"
-    ];
+
+    const faqData = ["How to craft a pickaxe?", "What do creepers drop?", "How to tame a wolf?"];
+    
+    let savedSearch = localStorage.getItem('faqSearchQuery');
+    if (savedSearch) {
+        $('#faq-search').val(savedSearch);
+        setTimeout(() => $('#faq-search').trigger('keyup'), 100);
+    }
+
     $('#faq-search').on('keyup', function() {
         let val = $(this).val().toLowerCase();
+        localStorage.setItem('faqSearchQuery', $(this).val());
+        
         let suggestions = "";
         if (val.length > 0) {
             let matches = faqData.filter(item => item.toLowerCase().includes(val));
-            matches.forEach(match => {
-                suggestions += `<div class="suggestion-item">${match}</div>`;
-            });
+            matches.forEach(match => { suggestions += `<div class="suggestion-item">${match}</div>`; });
         }
         $('#autocomplete-list').html(suggestions);
         $('.accordion-item').each(function() {
@@ -250,7 +348,6 @@ $(document).ready(function() {
             if (val.length > 0) {
                 let regex = new RegExp(`(${val})`, "gi");
                 let matchFound = false;
-
                 if (originalHeaderText.toLowerCase().includes(val)) {
                     $header.html(originalHeaderText.replace(regex, "<mark>$1</mark>"));
                     matchFound = true;
@@ -259,54 +356,35 @@ $(document).ready(function() {
                     $content.html(originalContentText.replace(regex, "<mark>$1</mark>"));
                     matchFound = true;
                 }
-
-                if (matchFound) {
-                    $item.show();
-                } else {
-                    $item.hide();
-                }
+                if (matchFound) $item.show();
+                else $item.hide();
             } else {
                 $item.show();
             }
         });
     });
+
     $(document).on('click', '.suggestion-item', function() {
         $('#faq-search').val($(this).text()).trigger('keyup');
         $('#autocomplete-list').empty();
     });
+
     $('.counter').each(function() {
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).data('target')
-        }, {
-            duration: 2000,
-            easing: 'swing',
-            step: function(now) {
-                $(this).text(Math.ceil(now) + "+");
-            }
+        $(this).prop('Counter', 0).animate({ Counter: $(this).data('target') }, {
+            duration: 2000, easing: 'swing',
+            step: function(now) { $(this).text(Math.ceil(now) + "+"); }
         });
     });
-    function showToast(message) {
-        $('#toast').text(message).fadeIn().delay(3000).fadeOut();
-    }
-    $('#contact-form').on('submit', function(e) {
-        e.preventDefault();
-        let $btn = $(this).find('button[type="submit"]');
-        let originalText = $btn.text();
-        $btn.prop('disabled', true).html('<span class="spinner"></span>Please wait...');
-        setTimeout(function() {
-            $btn.prop('disabled', false).text(originalText);
-            showToast("Form submitted successfully!");
-            $('#contact-form')[0].reset();
-        }, 2000);
-    });
+
     $('#copy-btn').on('click', function() {
         let text = $('#coord-text').text();
         navigator.clipboard.writeText(text).then(function() {
             $('#copy-btn').html('&#10003; Copied');
-            showToast("Copied to clipboard!");
+            $('#toast').text("Copied to clipboard!").fadeIn().delay(2000).fadeOut();
             setTimeout(() => $('#copy-btn').text('Copy'), 2000);
         });
     });
+
     function lazyLoad() {
         $('.lazy').each(function() {
             if ($(this).offset().top < $(window).scrollTop() + $(window).height() + 100) {
