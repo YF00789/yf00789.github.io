@@ -35,32 +35,57 @@
         <button id="color-btn" class="mc-button" style="width: 100%;">Random Color</button>
     </aside>
     <main>
-        <section class="card">
-            <h2>Login/Register</h2>
-            <form id="validation-form" novalidate>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username">
-                    <div class="error" id="username-error">Username is required.</div>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email">
-                    <div class="error" id="email-error">Invalid email format.</div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password (min. 8 chars)</label>
-                    <input type="password" id="password" name="password">
-                    <div class="error" id="password-error">Password must be at least 8 characters.</div>
-                </div>
-                <div class="form-group">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" id="confirm-password" name="confirm-password">
-                    <div class="error" id="confirm-password-error">Passwords do not match.</div>
-                </div>
-                <button type="submit" class="mc-button">Login/Register</button>
-            </form>
-        </section>
+        <div class="card-row">
+            <section class="card" style="flex:1;">
+                <h2>Sign Up</h2>
+                <form id="signup-form" novalidate>
+                    <div class="form-group">
+                        <label for="signup-name">Username</label>
+                        <input type="text" id="signup-name" name="signup-name">
+                        <div class="error" id="signup-name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="text" id="signup-email" name="signup-email">
+                        <div class="error" id="signup-email-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone Number</label>
+                        <input type="text" id="signup-phone" name="signup-phone">
+                        <div class="error" id="signup-phone-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="signup-password">
+                        <div class="error" id="signup-password-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" name="signup-confirm">
+                        <div class="error" id="signup-confirm-error"></div>
+                    </div>
+                    <button type="submit" class="mc-button">Register</button>
+                </form>
+            </section>
+            
+            <section class="card" style="flex:1;">
+                <h2>Log In</h2>
+                <form id="login-form" novalidate>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="text" id="login-email" name="login-email">
+                        <div class="error" id="login-email-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="login-password">
+                        <div class="error" id="login-password-error"></div>
+                    </div>
+                    <button type="submit" class="mc-button">Login</button>
+                </form>
+            </section>
+        </div>
+
         <section class="card">
             <h2>FAQ</h2>
             <div class="search-container">
@@ -100,12 +125,12 @@
         <div class="popup-content card">
             <button id="close-popup" class="close-btn">X</button>
             <h2>Subscribe</h2>
-            <form>
+            <form id="subscribe-form" novalidate>
                 <div class="form-group">
                     <label for="sub-email">Email:</label>
-                    <input type="email" id="sub-email" required>
+                    <input type="text" id="sub-email">
                 </div>
-                <button type="submit" class="mc-button">Send</button>
+                <button type="button" class="mc-button">Send</button>
             </form>
         </div>
     </div>
