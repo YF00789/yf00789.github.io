@@ -1,4 +1,10 @@
-// Global initialization immediately executes to apply background and prevent color flashing
+const safeGetStorage = (key) => {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+};
+const safeSetStorage = (key, value) => {
+    try { localStorage.setItem(key, value); } catch (e) {}
+};
+
 (function initPersistedSettings() {
     try {
         const savedBg = localStorage.getItem('mcBgColor');
@@ -12,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clickSound = new Audio('https://www.myinstants.com/media/sounds/minecraft_click.mp3');
 
     const themeToggle = document.getElementById('theme-toggle');
-    const savedTheme = localStorage.getItem('mcTheme');
+    const savedTheme = safeGetStorage('mcTheme');
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
     }
@@ -21,22 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.addEventListener('click', () => {
             clickSound.play().catch(e => {});
             document.body.classList.toggle('dark-mode');
-            localStorage.setItem('mcTheme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            safeSetStorage('mcTheme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         });
     }
 
-    // Handles generating, applying, and saving random background colors
     const colorBtn = document.getElementById('color-btn');
     if (colorBtn) {
         const colors = ['#5c85d6', '#872b2b', '#2b8743', '#872b84', '#1a1a1a', '#5c3a21'];
         colorBtn.addEventListener('click', () => {
-            let currentIndex = parseInt(localStorage.getItem('mcBgColorIndex') || '-1');
+            let currentIndex = parseInt(safeGetStorage('mcBgColorIndex') || '-1');
             let nextIndex = (currentIndex + 1) % colors.length;
             let selectedColor = colors[nextIndex];
             
             document.documentElement.style.setProperty('--bg-color', selectedColor);
-            localStorage.setItem('mcBgColor', selectedColor);
-            localStorage.setItem('mcBgColorIndex', nextIndex);
+            safeSetStorage('mcBgColor', selectedColor);
+            safeSetStorage('mcBgColorIndex', nextIndex.toString());
         });
     }
 
@@ -102,6 +107,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const browseCatalogBtn = document.getElementById('browse-catalog-btn');
+    if (browseCatalogBtn) browseCatalogBtn.addEventListener('click', () => window.location.href = 'https://openlibrary.org/');
+
+    const viewScheduleBtn = document.getElementById('view-schedule-btn');
+    if (viewScheduleBtn) viewScheduleBtn.addEventListener('click', () => window.location.href = 'schedule.html');
+
+    const bookingPopupOverlay = document.getElementById('booking-popup-overlay');
+    const bookRoomBtn = document.getElementById('book-room-btn');
+    const closeBookingPopupBtn = document.getElementById('close-booking-popup');
+    
+    if (bookingPopupOverlay && bookRoomBtn && closeBookingPopupBtn) {
+        bookRoomBtn.addEventListener('click', () => bookingPopupOverlay.style.display = 'flex');
+        closeBookingPopupBtn.addEventListener('click', () => bookingPopupOverlay.style.display = 'none');
+        bookingPopupOverlay.addEventListener('click', (e) => {
+            if (e.target === bookingPopupOverlay) bookingPopupOverlay.style.display = 'none';
+        });
+        
+        const submitBookingBtn = document.getElementById('submit-booking');
+        if (submitBookingBtn) {
+            submitBookingBtn.addEventListener('click', () => {
+                const bDate = document.getElementById('booking-date').value;
+                const bTime = document.getElementById('booking-time').value;
+                if (bDate && bTime) {
+                    const toast = document.getElementById('toast');
+                    if (toast) {
+                        toast.textContent = "Room booked successfully!";
+                        toast.style.display = 'block';
+                        setTimeout(() => toast.style.display = 'none', 3000);
+                    }
+                    bookingPopupOverlay.style.display = 'none';
+                    document.getElementById('booking-form').reset();
+                } else {
+                    alert('Please select both date and time.');
+                }
+            });
+        }
+    }
+
     const showError = (inputId, show, message = '') => {
         const errorDiv = document.getElementById(`${inputId}-error`);
         if (errorDiv) {
@@ -119,13 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const validatePassword = (pwd) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pwd);
 
     let user = null;
-    try {
-        const storedData = localStorage.getItem('libraryUser');
-        if (storedData) user = JSON.parse(storedData);
-    } catch (e) {
-        localStorage.removeItem('libraryUser');
+    const storedData = safeGetStorage('libraryUser');
+    if (storedData) {
+        try { user = JSON.parse(storedData); } catch (e) {}
     }
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const isLoggedIn = safeGetStorage('isLoggedIn') === 'true';
 
     const sidebarUserInfo = document.getElementById('sidebar-user-info');
     if (sidebarUserInfo) {
@@ -148,15 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (pEmail) pEmail.textContent = user.email || 'N/A';
             if (pPhone) pPhone.textContent = user.phone || 'N/A';
         } else {
-            const mainContent = document.querySelector('main');
-            if (mainContent) {
-                mainContent.innerHTML = '<section class="card"><h2>Access Denied</h2><p>Please <a href="hub.html" style="color:#4caf50; font-weight:bold;">log in</a> to view your profile.</p></section>';
+            const profileContainer = document.getElementById('profile-container');
+            if (profileContainer) {
+                profileContainer.innerHTML = '<h2>Access Denied</h2><p>Please <a href="hub.html" style="color:#4caf50; font-weight:bold;">log in</a> to view your profile.</p>';
             }
         }
     }
 
     const handleLogout = () => {
-        localStorage.setItem('isLoggedIn', 'false');
+        safeSetStorage('isLoggedIn', 'false');
         window.location.href = 'hub.html';
     };
 
@@ -194,8 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (isValid) {
                 const userData = { name, email, phone, password };
-                localStorage.setItem('libraryUser', JSON.stringify(userData));
-                localStorage.setItem('isLoggedIn', 'true');
+                safeSetStorage('libraryUser', JSON.stringify(userData));
+                safeSetStorage('isLoggedIn', 'true');
                 window.location.href = 'profile.html';
             }
         });
@@ -217,13 +258,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (isValid) {
                 let storedUser = null;
-                try {
-                    const stored = localStorage.getItem('libraryUser');
-                    if (stored) storedUser = JSON.parse(stored);
-                } catch (err) {}
+                const stored = safeGetStorage('libraryUser');
+                if (stored) {
+                    try { storedUser = JSON.parse(stored); } catch (err) {}
+                }
                 
                 if (storedUser && storedUser.email === email && storedUser.password === password) {
-                    localStorage.setItem('isLoggedIn', 'true');
+                    safeSetStorage('isLoggedIn', 'true');
                     window.location.href = 'profile.html';
                 } else {
                     showError('login-password', true, 'Invalid credentials.');
@@ -281,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 resultsContainer.innerHTML = '';
                 if (data.docs.length === 0) {
-                    resultsContainer.innerHTML = '<p>No books found.</p>';
+                    resultsContainer.innerHTML = '<p>No scrolls found.</p>';
                     return;
                 }
                 data.docs.forEach(book => {
@@ -305,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     link.style.marginTop = 'auto';
                     
                     const btn = document.createElement('button');
-                    btn.textContent = 'View Book';
+                    btn.textContent = 'View Scroll';
                     btn.style.width = '100%';
                     btn.style.boxSizing = 'border-box';
                     
@@ -371,7 +412,9 @@ $(document).ready(function() {
 
     const faqData = ["How to craft a pickaxe?", "What do creepers drop?", "How to tame a wolf?"];
     
-    let savedSearch = localStorage.getItem('faqSearchQuery');
+    let savedSearch = null;
+    try { savedSearch = localStorage.getItem('faqSearchQuery'); } catch(e) {}
+
     if (savedSearch) {
         $('#faq-search').val(savedSearch);
         setTimeout(() => $('#faq-search').trigger('keyup'), 100);
@@ -379,7 +422,7 @@ $(document).ready(function() {
 
     $('#faq-search').on('keyup', function() {
         let val = $(this).val().toLowerCase();
-        localStorage.setItem('faqSearchQuery', $(this).val());
+        try { localStorage.setItem('faqSearchQuery', $(this).val()); } catch(e) {}
         
         let suggestions = "";
         if (val.length > 0) {

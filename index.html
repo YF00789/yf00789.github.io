@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
     <div id="scroll-progress-bar"></div>
@@ -85,19 +85,19 @@
                     <img src="images/ebooks.jpg" alt="E-books">
                     <h3>Digital Archives</h3>
                     <p>Access thousands of e-books, audiobooks, and academic journals from your device.</p>
-                    <button>Browse Catalog</button>
+                    <button id="browse-catalog-btn">Browse Catalog</button>
                 </div>
                 <div class="flex-card">
                     <img src="images/library.jpg" alt="Study Room">
                     <h3>Study Spaces</h3>
                     <p>Reserve quiet rooms for individual study or group project meetings.</p>
-                    <button>Book a Room</button>
+                    <button id="book-room-btn">Book a Room</button>
                 </div>
                 <div class="flex-card">
                     <img src="images/event.jpg" alt="Community Event">
                     <h3>Community Events</h3>
                     <p>Join our weekly book clubs, tech workshops, and local author meet-and-greets.</p>
-                    <button>View Schedule</button>
+                    <button id="view-schedule-btn">View Schedule</button>
                 </div>
             </div>
         </section>
@@ -105,6 +105,25 @@
     <footer>
         <p>Project by: Ilya D.</p>
     </footer>
+
+    <div id="booking-popup-overlay" class="popup-overlay">
+        <div class="popup-content card">
+            <button id="close-booking-popup" class="close-btn">X</button>
+            <h2>Book a Room</h2>
+            <form id="booking-form" novalidate>
+                <div class="form-group">
+                    <label for="booking-date">Date:</label>
+                    <input type="date" id="booking-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-time">Time:</label>
+                    <input type="time" id="booking-time" required>
+                </div>
+                <button type="button" id="submit-booking" class="mc-button" style="width: 100%; margin-top: 10px;">Submit</button>
+            </form>
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>
