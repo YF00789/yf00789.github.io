@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+</head>
+<body>
+    <div id="scroll-progress-bar"></div>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="Library Logo">
+            <h2>Library</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="team.html">Our Team</a></li>
+                <li><a href="hub.html">Server Hub</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><button id="theme-toggle" class="mc-button">Night Vision</button></li>
+            </ul>
+        </nav>
+    </header>
+    <aside class="sidebar">
+        <h3>Account Status</h3>
+        <p style="color: #4caf50;">Online & Active</p>
+    </aside>
+    <main>
+        <section class="card">
+            <h2>Your Profile</h2>
+            <div id="profile-data" class="profile-card">
+                <h3>Player Details</h3>
+                <p><strong>Username:</strong> <span id="prof-name"></span></p>
+                <p><strong>Email:</strong> <span id="prof-email"></span></p>
+                <p><strong>Phone:</strong> <span id="prof-phone"></span></p>
+            </div>
+            <br>
+            <button id="logout-btn" class="mc-button">Log Out</button>
+        </section>
+    </main>
+    <footer>
+        <p>Project by: Ilya D.</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
