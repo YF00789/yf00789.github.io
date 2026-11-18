@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 resultsContainer.innerHTML = '';
                 if (data.docs.length === 0) {
-                    resultsContainer.innerHTML = '<p>No scrolls found.</p>';
+                    resultsContainer.innerHTML = '<p>No books found.</p>';
                     return;
                 }
                 data.docs.forEach(book => {
@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     link.style.marginTop = 'auto';
                     
                     const btn = document.createElement('button');
-                    btn.textContent = 'View Scroll';
+                    btn.textContent = 'View Book';
                     btn.style.width = '100%';
                     btn.style.boxSizing = 'border-box';
                     
